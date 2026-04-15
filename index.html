@@ -28,7 +28,6 @@
         .logo {
             width: 80vw;
             max-width: 820px;
-            /* Glow más sutil */
             filter: drop-shadow(0 0 6px rgba(126, 211, 33, 0.4));
             animation: blink 5s steps(2, start) infinite;
         }
@@ -46,7 +45,6 @@
         .reveal-text {
             font-size: 2.6rem;
             font-weight: 300;
-            /* Texto muy junto al logo */
             margin-top: 0.6rem;
             text-shadow: 0 0 20px rgba(255,255,255,0.3);
             opacity: 0;
@@ -68,9 +66,93 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- BOTÓN MANIFIESTO --- */
+        .btn-manifiesto {
+            display: inline-block;
+            margin-top: 2.5rem;
+            padding: 0.6rem 2rem;
+            background: transparent;
+            border: 1.5px solid #7ed321;
+            color: #7ed321;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 2.4s forwards;
+            transition: background 0.3s ease;
+        }
+        .btn-manifiesto:hover {
+            background: rgba(126, 211, 33, 0.1);
+        }
+
+        /* --- MANIFIESTO SECTION --- */
+        .manifiesto-divider {
+            width: 60px;
+            height: 1.5px;
+            background: #7ed321;
+            margin: 0 auto;
+            opacity: 0.4;
+        }
+
+        .manifiesto-section {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 5rem 2rem 8rem;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .manifiesto-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .manifiesto-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            color: #7ed321;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+        .manifiesto-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .manifiesto-body {
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.85;
+            color: rgba(255,255,255,0.78);
+        }
+        .manifiesto-body strong {
+            color: #fff;
+            font-weight: 500;
+        }
+        .manifiesto-quote {
+            margin-top: 2.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid #7ed321;
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.9);
+            font-style: italic;
+            line-height: 1.7;
+        }
+
         @media(max-width:768px) {
             .logo { width:95vw; }
             .reveal-text { font-size: 1.8rem; }
+            .manifiesto-title { font-size: 0.9rem; }
+            .manifiesto-body { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -81,6 +163,50 @@
 
         <h2 class="reveal-text">Transformación <span class="highlight">REAL</span></h2>
         <h2 class="reveal-text">del sector AEC aplicando tecnología avanzada</h2>
+        <a href="#manifiesto" class="btn-manifiesto" id="btn-manifiesto">Manifiesto Aelion</a>
     </div>
+
+    <!-- DIVIDER -->
+    <div class="manifiesto-divider" id="manifiesto"></div>
+
+    <!-- MANIFIESTO SECTION -->
+    <section class="manifiesto-section" id="manifiesto-section">
+        <p class="manifiesto-eyebrow">Manifiesto Aelion</p>
+        <h3 class="manifiesto-title">Así entendemos nosotros la tecnología en la construcción</h3>
+        <div class="manifiesto-body">
+            <p>La construcción es, históricamente, uno de los sectores más reacios a la adopción tecnológica. No por falta de herramientas, sino por algo mucho más simple y duro: <strong>si no se percibe un retorno inmediato, no se adopta.</strong></p>
+            <br>
+            <p>Durante años se ha hablado de digitalización, BIM, IA, XR… pero muchas iniciativas se han quedado en teoría, en promesas a largo plazo o en soluciones que no encajan con la operativa real de las obras.</p>
+            <br>
+            <p>En Aelion partimos de una premisa muy clara: <strong>la tecnología solo tiene sentido si genera valor desde el primer día</strong>, si mejora la operativa, ahorra tiempo, reduce errores y tiene impacto directo en la cuenta de resultados.</p>
+            <br>
+            <p>Nuestro foco no es "incorporar tecnología", sino <strong>convertirla en una ventaja competitiva real</strong> para quien la aplica.</p>
+        </div>
+        <blockquote class="manifiesto-quote">
+            Si no hay impacto inmediato, no hay adopción.<br>Y si no hay adopción, no hay transformación.
+        </blockquote>
+    </section>
+
+    <script>
+        // Smooth scroll + trigger animation on click
+        document.getElementById('btn-manifiesto').addEventListener('click', function(e) {
+            e.preventDefault();
+            const section = document.getElementById('manifiesto-section');
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+                section.classList.add('visible');
+            }, 300);
+        });
+
+        // También se activa si el usuario hace scroll manualmente
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        observer.observe(document.getElementById('manifiesto-section'));
+    </script>
 </body>
 </html>
